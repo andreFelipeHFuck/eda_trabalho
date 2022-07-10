@@ -122,7 +122,13 @@ void escreverArquivo(Palavra *palavras, int numPalavras){
         printf("Erro, não foi possivel abrir o arquivo\n");
     }else{
         for(int i = 0; i<numPalavras; i++){
-            fprintf(arq, "%s\n", palavras[i].palavra);
+            if(linha != palavras[i].linha){
+                linha = palavras[i].linha;
+                fprintf(arq, "\n");
+                fprintf(arq, "%s ", palavras[i].palavra);
+            }else{
+                fprintf(arq, "%s ", palavras[i].palavra);
+            }
         }
     }
     rename("arquivo.txt", "arquivoOLD.txt");
