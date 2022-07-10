@@ -88,6 +88,7 @@ Palavra * geraPalavras(char nomeArquivo[30], int *numLetraInicial,  int numeroPa
     int numLinha = 1;
     int i = 0;
     size_t len = 100;
+    size_t ln;
     char * linha = malloc(len);
     char *palavra;
 
@@ -97,6 +98,10 @@ Palavra * geraPalavras(char nomeArquivo[30], int *numLetraInicial,  int numeroPa
         while(palavra){
             palavras[i].linha = numLinha;
             palavras[i].posicaoLetraInicial = numLetraInicial[i];
+            ln = strlen(palavra) - 1;
+            if(palavra[ln] == '\n'){
+                palavra[ln] = '\0';
+            }
             strcpy(palavras[i].palavra, palavra);
             palavra = strtok(NULL, " ");
             i++;
@@ -110,19 +115,17 @@ Palavra * geraPalavras(char nomeArquivo[30], int *numLetraInicial,  int numeroPa
 
 void escreverArquivo(Palavra *palavras, int numPalavras){
     FILE *arq;
-    arq = fopen("teste.txt", "w");
+    arq = fopen("arqTemp.txt", "w");
     int linha = palavras[0].linha;
     
     if(arq == NULL){
         printf("Erro, não foi possivel abrir o arquivo\n");
     }else{
         for(int i = 0; i<numPalavras; i++){
-            if(linha != palavras[i].linha){
-                linha = palavras[i].linha;
-                fprintf(arq, "%s ", palavras[i].palavra);
-            }else{
-                fprintf(arq, "%s", palavras[i].palavra);
-            }
+            fprintf(arq, "%s\n", palavras[i].palavra);
         }
     }
+    rename("arquivo.txt", "arquivoOLD.txt");
+    rename("arqTemp.txt", "arquivo.txt");
+    fclose(arq);
 }

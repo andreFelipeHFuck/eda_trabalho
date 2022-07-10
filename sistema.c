@@ -22,3 +22,9 @@ Descritor* construirSistema(char arquivo[30]){
 
     return desc;
 }
+
+void salvarArquivo(Descritor *desc){
+    Palavra *palavras = geraPalavrasMulti(desc);
+    int numPalavras = numeroTotalPalavras(desc);
+    escreverArquivo(palavras, numPalavras);
+}

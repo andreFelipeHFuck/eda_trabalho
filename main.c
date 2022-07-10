@@ -10,6 +10,7 @@ void menu(){
     printf("6 - Numero total de palavras no texto\n");
     printf("7 - Numero de palavras com substring\n");
     printf("8 - Inserir palavra\n");
+    printf("9 - Editar palavra\n");
     printf("0 - Sair\n");
     printf("> ");
 }
@@ -129,6 +130,105 @@ void numeroTotalPalavrasTexto(Descritor *desc){
     fgets(finaliza, 10, stdin);
 }
 
+void numeroDePalavrasSubstring(Descritor *desc){
+    system("clear");
+    char finaliza[10];
+    char palavra[30];
+
+    printf("Numero de palavras com uma substring:\n");
+    printf("Digite a substring:\n");
+    printf("> ");
+    scanf("%s", palavra);
+
+    exibirPalavrasComSubstring(desc, palavra);
+
+    printf("\nAperte qualquer botão para sair: \n");
+    printf("> ");
+    __fpurge(stdin);
+    fgets(finaliza, 10, stdin);
+}
+
+void inserirPalavra(Descritor *desc){
+    system("clear");
+
+    Palavra *palavra = NULL;
+
+    char finaliza[10];
+    char p[30];
+
+    int linha = 0, posLog = 0;
+    int teste;
+
+    palavra = (Palavra *) malloc(sizeof(Palavra));
+
+    printf("Inserir palavra\n");
+
+    printf("Digite a palavra: \n");
+    printf("> ");
+    scanf("%s", p);
+    strcpy(palavra->palavra, p);
+
+    while (1)
+    {
+        printf("Digite o numero da linha:\n");
+        printf("> ");
+        scanf("%d", &linha);
+
+        if(linha > 0 && linha <= desc->numLinhas){
+            palavra->linha = linha;
+            break;
+        }else{
+            printf("Linha não existente, por favor tente de novo");
+        }
+    }
+
+    printf("Posição logica:\n");
+    printf("> ");
+    scanf("%d", &posLog);
+
+    teste = inserePalavraPoslog(desc, palavra, posLog);
+
+    if(teste == SUCESSO){
+        printf("Palavra inserida com sucesso\n");
+    }else{
+        printf("Não foi possivel inserir a palavra\n");
+    }
+
+    printf("\nAperte qualquer botão para sair: \n");
+    printf("> ");
+    __fpurge(stdin);
+    fgets(finaliza, 10, stdin); 
+}
+
+void editarPalavraTexto(Descritor *desc){
+    system("clear");
+    char finaliza[10];
+    int linha, coluna;
+
+    printf("Edição de uma palavra\n");
+
+    printf("Linha:\n");
+    printf("> ");
+    scanf("%d", &linha);
+
+    printf("Coluna:\n");
+    printf("> ");
+    scanf("%d", &coluna);
+
+    int resultado = editarPalavra(desc, linha, coluna);
+
+    if(resultado == 1){
+        printf("Palavra editada com sucesso\n");
+    }else{
+        printf("Não foi possivel editar a paalvra\n");
+    }
+
+    printf("\nAperte qualquer botão para sair: \n");
+    printf("> ");
+    __fpurge(stdin);
+    fgets(finaliza, 10, stdin);
+}
+
 int main(){
     Descritor *desc = construirSistema("arquivo.txt");
 
@@ -139,9 +239,7 @@ int main(){
         scanf("%d", &opt);
 
         switch (opt){
-
-        case 0:
-            break;
+            
         case 1:
             leituraTexto(desc);
             break;
@@ -159,6 +257,19 @@ int main(){
             break;
         case 6:
             numeroTotalPalavrasTexto(desc);
+            break;
+        case 7:
+            numeroDePalavrasSubstring(desc);
+            break;
+        case 8:
+            inserirPalavra(desc);
+            break;
+        case 9:
+            editarPalavraTexto(desc);
+            break;
+        case 0:
+            salvarArquivo(desc);
+            break;
         default:
             break;
         }

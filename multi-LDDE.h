@@ -78,6 +78,8 @@ int numeroTotalPalavras(Descritor *desc);
 
 int inserePalavraInicio(Descritor *desc, Palavra *palavra);
 
+int inserePalavraUltimo(Descritor *desc, Palavra *palavra);
+
 int inserePalavraPoslog(Descritor *desc, Palavra *palavra, int posLog);
 
 int editarPalavra(Descritor *desc, int linha, int coluna);
@@ -89,4 +91,6 @@ Palavra* geraPalavrasMulti(Descritor *desc);
 // Sistema
 
 Descritor* construirSistema(char arquivo[30]);
+
+void salvarArquivo(Descritor *desc);
 

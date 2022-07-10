@@ -141,7 +141,7 @@ void leituraDaLista(Descritor *desc){
     No *auxNo;
     int contador = 1;
 
-    printf(" ");
+    printf(" \n");
     while (auxLinha != NULL)
     {
         printf("%d ", contador);
@@ -151,7 +151,7 @@ void leituraDaLista(Descritor *desc){
             printf("%s ", auxNo->palavra.palavra);
             auxNo = auxNo->proximo;
         }
-        
+        printf("\n");
         contador++;
         auxLinha = auxLinha->abaixo;
     }
@@ -342,7 +342,6 @@ int numeroTotalPalavras(Descritor *desc){
     return contador;
 }
 
-// TO DO: Reescrever a função como insereNoLinha
 int inserePalavraInicio(Descritor *desc, Palavra *palavra){
     Linha *auxLinha;
     No *temp;
@@ -373,6 +372,47 @@ int inserePalavraInicio(Descritor *desc, Palavra *palavra){
     return ret;
 }
 
+int inserePalavraUltimo(Descritor *desc, Palavra *palavra){
+    Linha *auxLinha;
+    No *auxNo, *temp;
+
+    int contLinha = 1;
+    int ret = FRACASSO;
+
+    temp = (No*) malloc(sizeof(No));
+    auxLinha = desc->primeiraLinha;
+
+    while (auxLinha != NULL)
+    {
+        if(contLinha == palavra->linha){
+            break;
+        }else{
+            auxLinha = auxLinha->abaixo;
+            contLinha++;
+        }
+    }
+    if(auxLinha->inicio == NULL){
+        ret = inserePalavraInicio(desc, palavra);
+    }else{
+        auxNo = auxLinha->inicio;
+        while (auxNo->proximo != NULL)
+        {
+            auxNo = auxNo->proximo;
+        }
+        if(temp != NULL){
+            palavra->posicaoLetraInicial = strlen(auxNo->palavra.palavra) + 1;
+            memcpy(&(temp->palavra), palavra, sizeof(Palavra));
+            auxNo->proximo = temp;
+            temp->proximo = NULL;
+            temp->anterior = auxNo;
+            ret = SUCESSO;
+        }else{
+            ret = FRACASSO;
+        }
+    }
+    return ret;
+}
+
 int inserePalavraPoslog(Descritor *desc, Palavra *palavra, int posLog){
     Linha *auxLinha;
     No *temp, *pos, *auxNo;
@@ -388,6 +428,7 @@ int inserePalavraPoslog(Descritor *desc, Palavra *palavra, int posLog){
                 temp = (No*) malloc(sizeof(No));
                 pos = auxLinha->inicio->proximo;
                 if(pos != NULL){
+
                     contNo = 2;
                     while (contNo < posLog && pos->proximo != NULL){
                         pos = pos->proximo;
@@ -401,9 +442,9 @@ int inserePalavraPoslog(Descritor *desc, Palavra *palavra, int posLog){
                         pos->anterior = temp;
                         somarPosicaoLetraInicial(auxLinha, palavra->palavra, strlen(palavra->palavra));
                         ret = SUCESSO;
-                    }else{
-                        insereNoLinhaUltimo(desc, palavra->linha, *palavra);
                     }
+                }else{
+                    ret = inserePalavraUltimo(desc, palavra);
                 }
             }
         }
@@ -418,6 +459,7 @@ int editarPalavra(Descritor *desc, int linha, int coluna){
     No *auxNo;
     int tamPalavra;
     char novaPalavra[30];
+    int ret = FRACASSO;
 
     auxLinha = desc->primeiraLinha;
     while (auxLinha != NULL)
@@ -430,13 +472,14 @@ int editarPalavra(Descritor *desc, int linha, int coluna){
                 printf("> ");
                 scanf("%s", novaPalavra);
                 strcpy(auxNo->palavra.palavra, novaPalavra);
+                ret = SUCESSO;
             }
             auxNo = auxNo->proximo;
         }
         
         auxLinha = auxLinha->abaixo;
     }
-    
+    return ret;
 }
 
 void exibirPalavrasComSubstring(Descritor *desc, char substring[30]){
