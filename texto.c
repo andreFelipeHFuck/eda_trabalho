@@ -130,8 +130,10 @@ void escreverArquivo(Palavra *palavras, int numPalavras){
                 fprintf(arq, "%s ", palavras[i].palavra);
             }
         }
+        fprintf(arq, "\n");
+        rename("arquivo.txt", "arquivoOLD.txt");
+        rename("arqTemp.txt", "arquivo.txt");
     }
-    rename("arquivo.txt", "arquivoOLD.txt");
-    rename("arqTemp.txt", "arquivo.txt");
+   
     fclose(arq);
 }

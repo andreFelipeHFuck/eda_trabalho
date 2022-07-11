@@ -24,6 +24,8 @@ void leituraTexto(Descritor *desc){
 
 void buscaPalavraTexto(Descritor *desc){
     system("clear");
+    leituraTexto(desc);
+
     char finaliza[10];
     char palavra[30];
 
@@ -41,6 +43,8 @@ void buscaPalavraTexto(Descritor *desc){
 
 void removerPalavraTexto(Descritor *desc){
     system("clear");
+    leituraTexto(desc);
+
     char finaliza[10];
     char palavra[30];
 
@@ -64,6 +68,8 @@ void removerPalavraTexto(Descritor *desc){
 
 void removerPalavraLinhaColunaTexto(Descritor *desc){
     system("clear");
+    leituraTexto(desc);
+
     char finaliza[10];
     int linha, coluna;
 
@@ -93,6 +99,8 @@ void removerPalavraLinhaColunaTexto(Descritor *desc){
 
 void numeroDeUmaPalvraTexto(Descritor *desc){
     system("clear");
+    leituraTexto(desc);
+
     char finaliza[10];
     char palavra[30];
 
@@ -112,6 +120,8 @@ void numeroDeUmaPalvraTexto(Descritor *desc){
 
 void numeroTotalPalavrasTexto(Descritor *desc){
     system("clear");
+    leituraTexto(desc);
+
     char finaliza[10];
 
     int num = numeroTotalPalavras(desc);
@@ -125,6 +135,8 @@ void numeroTotalPalavrasTexto(Descritor *desc){
 
 void numeroDePalavrasSubstring(Descritor *desc){
     system("clear");
+    leituraTexto(desc);
+
     char finaliza[10];
     char palavra[30];
 
@@ -143,6 +155,7 @@ void numeroDePalavrasSubstring(Descritor *desc){
 
 void inserirPalavra(Descritor *desc){
     system("clear");
+    leituraTexto(desc);
 
     Palavra *palavra = NULL;
 
@@ -195,6 +208,8 @@ void inserirPalavra(Descritor *desc){
 
 void editarPalavraTexto(Descritor *desc){
     system("clear");
+    leituraTexto(desc);
+
     char finaliza[10];
     int linha, coluna;
 
