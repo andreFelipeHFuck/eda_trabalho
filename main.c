@@ -1,32 +1,25 @@
 #include "multi-LDDE.h"
 
 void menu(){
-    system("clear");
-    printf("1 - Ler texto\n");
-    printf("2 - Buscar palavra\n");
-    printf("3 - Remover palavra\n");
-    printf("4 - Remover palavra por linha e coluna\n");
-    printf("5 - Numero de ocorrencias de uma palavra\n");
-    printf("6 - Numero total de palavras no texto\n");
-    printf("7 - Numero de palavras com substring\n");
-    printf("8 - Inserir palavra\n");
-    printf("9 - Editar palavra\n");
+    printf("1 - Buscar palavra\n");
+    printf("2 - Remover palavra\n");
+    printf("3 - Remover palavra por linha e coluna\n");
+    printf("4 - Inserir palavra\n");
+    printf("5 - Editar palavra\n");
+    printf("6 - Numero de palavras com substring\n");
+    printf("7 - Numero de ocorrencias de uma palavra\n");
+    printf("8 - Numero total de palavras no texto\n");
+   
     printf("0 - Sair\n");
     printf("> ");
 }
 
 void leituraTexto(Descritor *desc){
     system("clear");
-    char finaliza[10];
 
     printf("Texto:\n");
 
     leituraDaLista(desc);
-
-    printf("\nAperte qualquer botão para sair: \n");
-    printf("> ");
-    __fpurge(stdin);
-    fgets(finaliza, 10, stdin);
 }
 
 void buscaPalavraTexto(Descritor *desc){
@@ -235,38 +228,37 @@ int main(){
     int opt;
     
     while (opt != 0){
+        leituraTexto(desc);
         menu();
         scanf("%d", &opt);
 
         switch (opt){
             
         case 1:
-            leituraTexto(desc);
-            break;
-        case 2:
             buscaPalavraTexto(desc);
             break;
-        case 3:
+        case 2:
             removerPalavraTexto(desc);
             break;
-        case 4:
+        case 3:
             removerPalavraLinhaColunaTexto(desc);
             break;
-        case 5:
-            numeroDeUmaPalvraTexto(desc);
-            break;
-        case 6:
-            numeroTotalPalavrasTexto(desc);
-            break;
-        case 7:
-            numeroDePalavrasSubstring(desc);
-            break;
-        case 8:
+        case 4:
             inserirPalavra(desc);
             break;
-        case 9:
+        case 5:
             editarPalavraTexto(desc);
             break;
+        case 6:
+            numeroDePalavrasSubstring(desc);
+            break;
+        case 7:
+            numeroDeUmaPalvraTexto(desc);
+            break;
+        case 8:
+            numeroTotalPalavrasTexto(desc);
+            break;
+      
         case 0:
             salvarArquivo(desc);
             break;

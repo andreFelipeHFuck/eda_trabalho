@@ -34,106 +34,115 @@ int insereLinhaPrimeiro(Descritor *desc){
 }
 
 int insereLinhaUltimo(Descritor *desc){
-    Linha *temporario = NULL, *aux;
-    int retorno = FRACASSO;
+    Linha *temp = NULL;
+    Linha *auxLinha;
+    int ret = FRACASSO;
 
-    temporario = (Linha*) malloc(sizeof(Linha));
+    temp = (Linha*) malloc(sizeof(Linha));
 
     if(desc->primeiraLinha == NULL){
-        retorno = insereLinhaPrimeiro(desc);     
+        ret = insereLinhaPrimeiro(desc);     
     }else{
-        aux = desc->primeiraLinha;
+        auxLinha = desc->primeiraLinha;
 
-        while (aux->abaixo != NULL){
-            aux = aux->abaixo;
+        while (auxLinha->abaixo != NULL){
+            auxLinha = auxLinha->abaixo;
         }
 
-        if(temporario != NULL){
+        if(temp != NULL){
             (desc->numLinhas)++;
-            temporario->inicio = NULL;
-            aux->abaixo = temporario;
-            temporario->abaixo = NULL;
-            temporario->emcima = aux;
-            retorno = SUCESSO;
+            temp->inicio = NULL;
+            auxLinha->abaixo = temp;
+            temp->abaixo = NULL;
+            temp->emcima = auxLinha;
+            ret = SUCESSO;
         }else{
-            retorno = FRACASSO;
+            ret = FRACASSO;
         }
     }
-    return retorno;
+    return ret;
 }
 
 int insereNoLinha(Descritor *desc, int numLinha, Palavra palavra){
-    No *temporario;
-    Linha *aux = (Linha*) malloc(sizeof(Linha));
-    temporario = (No*) malloc(sizeof(No));
-    int retorno = FRACASSO, contador = 1;
+    No *temp = NULL;
+    Linha *auxLinha = NULL;
+    int ret = FRACASSO;
+    int contador = 1;
     
-   if(desc->numLinhas > 0){
-      aux = desc->primeiraLinha;
+    temp = (No*) malloc(sizeof(No));
+    auxLinha = (Linha*) malloc(sizeof(Linha));
 
-      while (aux != NULL)
+
+
+   if(desc->numLinhas > 0){
+      auxLinha = desc->primeiraLinha;
+
+      while (auxLinha != NULL)
       {
         if(contador == numLinha){
             break;
         }else{
-            aux = aux->abaixo;
+            auxLinha = auxLinha->abaixo;
             contador++;
         }
       }
      
-      if(temporario){
-        memcpy(&(temporario->palavra), &palavra, sizeof(Palavra));
-        temporario->anterior = NULL;
-        if(aux->inicio != NULL){
-            aux->inicio->anterior = temporario;
+      if(temp){
+        memcpy(&(temp->palavra), &palavra, sizeof(Palavra));
+        temp->anterior = NULL;
+        if(auxLinha->inicio != NULL){
+            auxLinha->inicio->anterior = temp;
         }
-        aux->inicio = temporario;
-        retorno = SUCESSO;
+        auxLinha->inicio = temp;
+        ret = SUCESSO;
       }
    }
-   return retorno;
+   return ret;
 }
 
 int insereNoLinhaUltimo(Descritor *desc, int numLinha, Palavra palavra){
-    No *temporario = NULL, *auxNo;
-    Linha *aux = (Linha*) malloc(sizeof(Linha));
-    int retorno = FRACASSO, contador = 1;
-
-    temporario = (No*) malloc(sizeof(No));
+    No *temp = NULL;
+    No *auxNo;
+    Linha *auxLinha = NULL;
+    int ret = FRACASSO;
+    int contador = 1;
+ (Linha*) malloc(sizeof(Linha));
+    auxLinha = (Linha*) malloc(sizeof(Linha));
+    temp = (No*) malloc(sizeof(No));
     
    if(numLinha <= desc->numLinhas && desc->numLinhas > 0){
-      aux = desc->primeiraLinha;
+      auxLinha = desc->primeiraLinha;
 
-      while (aux != NULL)
+      while (auxLinha != NULL)
       {
         if(contador == numLinha){
             break;
         }else{
-            aux = aux->abaixo;
+            auxLinha = auxLinha->abaixo;
             contador++;
         }
       }
-      if(aux->inicio == NULL){
-        retorno = insereNoLinha(desc, numLinha, palavra);
+      if(auxLinha->inicio == NULL){
+        ret = insereNoLinha(desc, numLinha, palavra);
       }else{
-        auxNo = aux->inicio;
+        auxNo = auxLinha->inicio;
         while (auxNo->proximo != NULL)
         {
             auxNo = auxNo->proximo;
         }
        
-        if(temporario){
-            memcpy(&(temporario->palavra), &palavra, sizeof(Palavra));
-            auxNo->proximo = temporario;
-            temporario->proximo = NULL;
-            temporario->anterior = auxNo;
-            retorno = SUCESSO;
+        if(temp){
+            memcpy(&(temp->palavra), &palavra, sizeof(Palavra));
+            auxNo->proximo = temp;
+            temp->proximo = NULL;
+            temp->anterior = auxNo;
+            ret = SUCESSO;
         }else{
-            retorno = FRACASSO;
+            ret = FRACASSO;
         }
       }
    }
-   return retorno;
+   return ret;
 }
 
 void leituraDaLista(Descritor *desc){
@@ -184,11 +193,11 @@ void somarPosicaoLetraInicial(Linha *linha, char palavra[30], int num){
     int flag = 0;
 
     while (auxNo != NULL){
-        if(strcmp(palavra, auxNo->palavra.palavra) == 0){
-            flag = 1;
-        }
         if(flag == 1){
             auxNo->palavra.posicaoLetraInicial += num;
+        }
+        if(strcmp(palavra, auxNo->palavra.palavra) == 0){
+            flag = 1;
         }
         auxNo = auxNo->proximo;
     }
@@ -199,12 +208,13 @@ void subtrairPosicaoLetraInicial(Linha *linha, char palavra[30], int num){
     int flag = 0;
 
     while (auxNo != NULL){
-        if(strcmp(palavra, auxNo->palavra.palavra) == 0){
-            flag = 1;
-        }
         if(flag == 1 && !(auxNo->palavra.posicaoLetraInicial - num < 0)){
             auxNo->palavra.posicaoLetraInicial -= num;
         }
+        if(strcmp(palavra, auxNo->palavra.palavra) == 0){
+            flag = 1;
+        }
+      
         auxNo = auxNo->proximo;
     }
 }

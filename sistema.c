@@ -11,8 +11,7 @@ Descritor* construirSistema(char arquivo[30]){
 
     Palavra *palavras = geraPalavras("arquivo.txt",numLetraInicial, numPalavras);
 
-    printf("%d\n", numLinhas);
-     for(int i=0; i<5;i++){
+     for(int i=0; i<numLinhas;i++){
         insereLinhaUltimo(desc);
     }
     
