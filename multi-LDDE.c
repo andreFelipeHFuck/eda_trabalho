@@ -72,8 +72,6 @@ int insereNoLinha(Descritor *desc, int numLinha, Palavra palavra){
     temp = (No*) malloc(sizeof(No));
     auxLinha = (Linha*) malloc(sizeof(Linha));
 
-
-
    if(desc->numLinhas > 0){
       auxLinha = desc->primeiraLinha;
 
@@ -539,4 +537,39 @@ Palavra* geraPalavrasMulti(Descritor *desc){
         auxLinha = auxLinha->abaixo;
     }
     return palavras;
+}
+
+int reniciarLinha(Linha *linha){
+    if(linha->inicio != NULL){
+        while (linha->inicio->proximo != NULL)
+        {
+            linha->inicio = linha->inicio->proximo;
+            free(linha->inicio->anterior);
+        }
+        free(linha->inicio);
+        linha->inicio = NULL;
+        return SUCESSO;
+    }else{
+        return FRACASSO;
+    }
+}
+
+int reiniciar(Descritor *desc){
+    if(desc->primeiraLinha != NULL){
+        while (desc->primeiraLinha->abaixo != NULL){
+            desc->primeiraLinha = desc->primeiraLinha->abaixo;
+            reniciarLinha(desc->primeiraLinha->emcima);
+            free(desc->primeiraLinha->emcima);
+        }
+        free(desc->primeiraLinha);
+        return SUCESSO;
+    }else{
+        return FRACASSO;
+    }
+}
+
+Descritor* destruir(Descritor *desc){
+    reiniciar(desc);
+    free(desc);
+    return NULL;
 }

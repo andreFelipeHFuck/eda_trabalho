@@ -26,4 +26,5 @@ void salvarArquivo(Descritor *desc){
     Palavra *palavras = geraPalavrasMulti(desc);
     int numPalavras = numeroTotalPalavras(desc);
     escreverArquivo(palavras, numPalavras);
+    destruir(desc);
 }

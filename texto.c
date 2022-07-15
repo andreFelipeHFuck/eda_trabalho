@@ -130,6 +130,7 @@ void escreverArquivo(Palavra *palavras, int numPalavras){
         fprintf(arq, "\n");
         rename("arquivo.txt", "arquivoOLD.txt");
         rename("arqTemp.txt", "arquivo.txt");
+        printf("Arquivo salvo com sucesso\n");
     }
    
     fclose(arq);
