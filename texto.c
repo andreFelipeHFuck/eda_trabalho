@@ -43,6 +43,7 @@ int numeroPalavras(char nomeArquivo[30]){
             contador++;
             palavra = strtok(NULL, " ");
         }
+        contador--;
     }
     free(palavra);
     free(linha);
@@ -88,20 +89,16 @@ Palavra * geraPalavras(char nomeArquivo[30], int *numLetraInicial,  int numeroPa
     int numLinha = 1;
     int i = 0;
     size_t len = 100;
-    size_t ln;
     char * linha = malloc(len);
     char *palavra;
 
     while (getline(&linha, &len, arq) > 0)
     {
-        palavra = strtok(linha, " ");
+        palavra = strtok(linha, "\n");
+        palavra = strtok(palavra, " ");
         while(palavra){
             palavras[i].linha = numLinha;
             palavras[i].posicaoLetraInicial = numLetraInicial[i];
-            ln = strlen(palavra) - 1;
-            if(palavra[ln] == '\n'){
-                palavra[ln] = '\0';
-            }
             strcpy(palavras[i].palavra, palavra);
             palavra = strtok(NULL, " ");
             i++;

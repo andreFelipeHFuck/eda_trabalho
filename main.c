@@ -239,7 +239,7 @@ void editarPalavraTexto(Descritor *desc){
 
 int main(){
     Descritor *desc = construirSistema("arquivo.txt");
-
+    
     int opt;
     
     while (opt != 0){
@@ -281,6 +281,5 @@ int main(){
             break;
         }
     }
-    
 }
 
