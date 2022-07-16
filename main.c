@@ -212,6 +212,13 @@ void editarPalavraTexto(Descritor *desc){
 
     char finaliza[10];
     int linha, coluna;
+    char pal[30];
+
+    printf("Digite a palavra que deseja alterar\n");
+    printf("> ");
+    scanf("%s", pal);
+
+    buscaPalavra(desc, pal);
 
     printf("Edição de uma palavra\n");
 
