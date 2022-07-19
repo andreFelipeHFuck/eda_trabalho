@@ -73,6 +73,14 @@ void removerPalavraLinhaColunaTexto(Descritor *desc){
     char finaliza[10];
     int linha, coluna;
 
+    char pal[30];
+
+    printf("Digite a palavra que deseja remover\n");
+    printf("> ");
+    scanf("%s", pal);
+
+    buscaPalavra(desc, pal);
+
     printf("Remover palavra a partir da sua linha e coluna\n");
 
     printf("Linha:\n");
